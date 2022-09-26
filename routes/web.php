@@ -22,4 +22,4 @@ use App\Http\Controllers\IMCController;
 
 Route::get('/', [IMCController::class, 'index']);
 
-Route::get('/', [IMCController::class, 'imc']);
+Route::get('/imc', [IMCController::class, 'imc']);

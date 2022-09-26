@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: aqua;
+}
+
+body * {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    line-height: 160%;
+}
+
+header {
+    padding-top: 25px;
+    height: 152px;
+}
+
+header div {
+    margin: auto;
+    width: 250px;
+    text-align: center;
+    color: beige;
+    border-radius: 8px;
+    background-image: linear-gradient(90deg, #390979 0%, #ff0094 50.52%, #f3f500 100%);
+
+    transition: transform .3s;
+}
+
+header div:hover {
+    transform: scale(1.1);
+}
+
+main {
+    max-width: 580px;
+    width: 100%;
+    margin: auto;
+
+    margin-top: 32px;
+}
+
+.form {
+    border-radius: 8px;
+    background-color: aquamarine;
+    
+}
