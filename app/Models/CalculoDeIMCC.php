@@ -10,40 +10,91 @@ class CalculoDeIMCC extends Model
 {
     use HasFactory;
 
-    public function nome(){
-        return $_GET['iNome'];
-    }
-    public function anos(){
-        $nascimento = $_GET['iNascimento'];
+    function idade($nascimento){
         $data = new DateTime($nascimento);
         $resultado = $data->diff(new DateTime(date('d-m-Y')));
-
-        $anos = $resultado->format('%Y');
+        $idade = $resultado->format('%Y');
+        if ($idade<=1){
+            $idade = $resultado->format('%m');
+        }
         
-        return $anos;
+        return $idade; 
     }
-    public function altura(){
-        return $_GET['iAltura'];
+    function sono($sono, $idade){
+        if ($idade<=3) {
+            if($sono<14){
+                $msono = "Precisa dormir mais!";
+            } elseif($sono<=17){
+                $msono = "Qualidade de sono Ok!";
+            } else {
+                $msono = "Cuidado! Diminua a quantidade de horas dormidas!";
+            }
+        } elseif ($idade<=11){
+            if($sono<12){
+                $msono = "Precisa dormir mais!";
+            } elseif($sono<=15){
+                $msono = "Qualidade de sono Ok!";
+            } else {
+                $msono = "Cuidado! Diminua a quantidade de horas dormidas!";
+            }
+        } elseif ($idade<=2){
+            if($sono<11){
+                $msono = "Precisa dormir mais!";
+            } elseif($sono<=14){
+                $msono = "Qualidade de sono Ok!";
+            } else {
+                $msono = "Cuidado! Diminua a quantidade de horas dormidas!";
+            }
+        } elseif ($idade<=5){
+            if($sono<10){
+                $msono = "Precisa dormir mais!";
+            } elseif($sono<=13){
+                $msono = "Qualidade de sono Ok!";
+            } else {
+                $msono = "Cuidado! Diminua a quantidade de horas dormidas!";
+            }
+        } elseif ($idade<=13) {
+            if($sono<9){
+                $msono = "Precisa dormir mais!";
+            } elseif($sono<=11){
+                $msono = "Qualidade de sono Ok!";
+            } else {
+                $msono = "Cuidado! Diminua a quantidade de horas dormidas!";
+            }
+        } elseif ($idade<=17){
+            if($sono<8){
+                $msono = "Precisa dormir mais!";
+            } elseif($sono<=10){
+                $msono = "Qualidade de sono Ok!";
+            } else {
+                $msono = "Cuidado! Diminua a quantidade de horas dormidas!";
+            }
+        } elseif ($idade<=64){
+            if($sono<7){
+                $msono = "Precisa dormir mais!";
+            } elseif($sono<=9){
+                $msono = "Qualidade de sono Ok!";
+            } else {
+                $msono = "Cuidado! Diminua a quantidade de horas dormidas!";
+            }
+        } else {
+            if($sono<7){
+                $msono = "Precisa dormir mais!";
+            } elseif($sono<=8){
+                $msono = "Qualidade de sono Ok!";
+            } else {
+                $msono = "Cuidado! Diminua a quantidade de horas dormidas!";
+            }
+        }
+
+        return $msono;
+
     }
-    public function peso(){
-        return $_GET['iPeso'];
+    function imc($peso, $altura){
+        return round($peso/($altura*$altura));
+
     }
-    public function imc(){
-        $peso = $_GET['iPeso'];
-        $altura = $_GET['iAltura'];
-
-        $imc = $peso/($altura*$altura);
-
-        return $imc;
-    }
-    public function classificado(){
-        $peso = $_GET['iPeso'];
-        $altura = $_GET['iAltura'];
-
-        $classificado = "";
-
-        $imc = $peso/($altura*$altura);
-
+    function classificado($imc){
         if($imc<18.5){
             $classificado = "Abaixo do Peso";
         } elseif($imc<24.9){
@@ -59,5 +110,15 @@ class CalculoDeIMCC extends Model
         }
 
         return $classificado;
+    }
+    public function dados() {
+        $valores["nome"] = $_GET["iNome"];
+        $valores["peso"] = $_GET["iPeso"];
+        $valores["altura"] = $_GET["iAltura"];
+        $valores["idade"] = $this->idade($_GET["iNascimento"]);
+        $valores["imc"] = $this->imc($valores["peso"], $valores["altura"]);
+        $valores["classificado"] = $this->classificado($valores["imc"]);
+        $valores["msono"] = $this->sono($_GET['iSono'], $valores['idade']);
+        return $valores;
     }
 }

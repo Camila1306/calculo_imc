@@ -15,8 +15,9 @@
     <main>
         <div>
             <div class="seccess">
-                <p>{{$nome}}, você tem {{$anos}} anos, sua altura é de {{$altura}} m, seu peso é de {{$peso}} kg, e seu IMC é {{$imc}}.</p>
-                <p>Pelo cálculo do IMC você está classificado como {{$classificado}}!</p>
+                <p>{{$resultado["nome"]}}, você tem {{$resultado["idade"]}} anos, sua altura é de {{$resultado["altura"]}} m, seu peso é de {{$resultado["peso"]}} kg, e seu IMC é {{$resultado["imc"]}}.</p>
+                <p>Pelo cálculo do IMC você está classificado como {{$resultado["classificado"]}}!</p>
+                <p>{{$resultado["msono"]}}</p>
             </div>
         </div>
         <a class="btn" href="{{URL('/')}}" title="voltar">Voltar</a>

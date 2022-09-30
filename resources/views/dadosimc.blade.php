@@ -27,6 +27,9 @@
             <label class="label" for="iAltura">Altura:</label>
             <input class="input" type="number" name="iAltura" id="iAltura" step="0.01" required>
             <br>
+            <label for="iSono">Média de Horas Dormidas:</label>
+            <input type="time" name="iSono" id="iSono">
+            <br>
             <button class="btn" type="submit">Calcular</button>
         </form>
     </main>

@@ -15,13 +15,8 @@ class IMCController extends Controller
 
     public function imc(){
         $CalculoDeIMCC = new ModelsCalculoDeIMCC();
-        $nome = $CalculoDeIMCC->nome();
-        $anos = $CalculoDeIMCC->anos();
-        $altura = $CalculoDeIMCC->altura();
-        $peso = $CalculoDeIMCC->peso();
-        $imc = $CalculoDeIMCC->imc();
-        $classificado = $CalculoDeIMCC->classificado();
+        $resultado = $CalculoDeIMCC->dados();
 
-        return view('resultado', ['nome'=>$nome, 'anos'=>$anos, 'altura'=>$altura, 'peso'=>$peso, 'imc'=>$imc, 'classificado'=>$classificado]);
+        return view('resultado', compact('resultado'));
     }
 }
