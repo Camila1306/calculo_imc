@@ -3,20 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\CalculoDeIMC;
-use App\Models\CalculoDeIMCC as ModelsCalculoDeIMCC;
+use App\Models\CalculoDeIMCC;
 
 
 class IMCController extends Controller
 {
     public function index() {
+        return view('saude');
+    }
+
+    public function dadosimc() {
         return view('dadosimc');
     }
 
     public function imc(){
-        $CalculoDeIMCC = new ModelsCalculoDeIMCC();
-        $resultado = $CalculoDeIMCC->dados();
+        $CalculoDeIMCC = new CalculoDeIMCC();
+        $resultadoimc = $CalculoDeIMCC->imc();
 
-        return view('resultado', compact('resultado'));
+        return view('imc', compact('resultadoimc'));
+    }
+
+    public function dadossono() {
+        return view('dadossono');
+    }
+
+    public function sono(){
+        $CalculoDeIMCC = new CalculoDeIMCC();
+        $resultadosono = $CalculoDeIMCC->sono();
+
+        return view('sono', compact('resultadosono'));
     }
 }

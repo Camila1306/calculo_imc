@@ -14,14 +14,34 @@ class CalculoDeIMCC extends Model
         $data = new DateTime($nascimento);
         $resultado = $data->diff(new DateTime(date('d-m-Y')));
         $idade = $resultado->format('%Y');
-        if ($idade<=1){
-            $idade = $resultado->format('%m');
-        }
-        
+
         return $idade; 
     }
-    function sono($sono, $idade){
-        if ($idade<=3) {
+    
+    function calcula_imc($peso, $altura){
+        return round($peso/($altura*$altura));
+
+    }
+    function classificado($imc){
+        if($imc<18.5){
+            $classificado = "Abaixo do Peso";
+        } elseif($imc<24.9){
+            $classificado = "Peso normal";
+        } elseif($imc<29.9){
+            $classificado = "Sobrepeso";
+        } elseif($imc<34.9){
+            $classificado = "Obesidade grau 1";
+        } elseif($imc<39.9){
+            $classificado = "Obesidade grau 2";
+        } else{
+            $classificado = "Obesidade grau 3";
+        }
+
+        return $classificado;
+    }
+
+    function classifica_sono($sono, $idade){
+        if ($idade<=0.03) {
             if($sono<14){
                 $msono = "Precisa dormir mais!";
             } elseif($sono<=17){
@@ -29,7 +49,7 @@ class CalculoDeIMCC extends Model
             } else {
                 $msono = "Cuidado! Diminua a quantidade de horas dormidas!";
             }
-        } elseif ($idade<=11){
+        } elseif ($idade >=0.04 && $idade<=0.11){
             if($sono<12){
                 $msono = "Precisa dormir mais!";
             } elseif($sono<=15){
@@ -90,35 +110,23 @@ class CalculoDeIMCC extends Model
         return $msono;
 
     }
-    function imc($peso, $altura){
-        return round($peso/($altura*$altura));
 
-    }
-    function classificado($imc){
-        if($imc<18.5){
-            $classificado = "Abaixo do Peso";
-        } elseif($imc<24.9){
-            $classificado = "Peso normal";
-        } elseif($imc<29.9){
-            $classificado = "Sobrepeso";
-        } elseif($imc<34.9){
-            $classificado = "Obesidade grau 1";
-        } elseif($imc<39.9){
-            $classificado = "Obesidade grau 2";
-        } else{
-            $classificado = "Obesidade grau 3";
-        }
-
-        return $classificado;
-    }
-    public function dados() {
+    public function imc() {
         $valores["nome"] = $_GET["iNome"];
         $valores["peso"] = $_GET["iPeso"];
         $valores["altura"] = $_GET["iAltura"];
         $valores["idade"] = $this->idade($_GET["iNascimento"]);
-        $valores["imc"] = $this->imc($valores["peso"], $valores["altura"]);
+        $valores["imc"] = $this->calcula_imc($valores["iPeso"], $valores["iAltura"]);
         $valores["classificado"] = $this->classificado($valores["imc"]);
-        $valores["msono"] = $this->sono($_GET['iSono'], $valores['idade']);
+        return $valores;
+    }
+
+    public function sono() {
+        $valores["nome"] = $_GET['iNome'];
+        $valores["idade"] = $_GET["iIdade"];
+        $valores["sono"] = $_GET["iSono"];
+        $valores["msono"] = $this->classifica_sono($valores["sono"], $valores["idade"]);
+
         return $valores;
     }
 }
