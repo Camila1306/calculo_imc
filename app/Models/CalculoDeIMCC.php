@@ -116,7 +116,7 @@ class CalculoDeIMCC extends Model
         $valores["peso"] = $_GET["iPeso"];
         $valores["altura"] = $_GET["iAltura"];
         $valores["idade"] = $this->idade($_GET["iNascimento"]);
-        $valores["imc"] = $this->calcula_imc($valores["iPeso"], $valores["iAltura"]);
+        $valores["imc"] = $this->calcula_imc($valores["peso"], $valores["altura"]);
         $valores["classificado"] = $this->classificado($valores["imc"]);
         return $valores;
     }
